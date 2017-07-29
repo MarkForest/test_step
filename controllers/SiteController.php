@@ -2,7 +2,11 @@
 
 namespace app\controllers;
 
+use app\models\Cities;
+use app\models\Staff;
+use app\models\StaffCities;
 use Yii;
+use yii\db\Query;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
@@ -61,7 +65,14 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+
+        $cities = Cities::find()->all();
+        $staffes = Staff::find()->all();
+
+        return $this->render('index',[
+            'cities'=>$cities,
+            'staffes'=>$staffes,
+        ]);
     }
 
     /**
