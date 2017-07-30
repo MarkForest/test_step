@@ -30,6 +30,9 @@ class Staff extends \yii\db\ActiveRecord
         return 'staff';
     }
 
+
+
+
     /**
      * @inheritdoc
      */
@@ -107,6 +110,11 @@ class Staff extends \yii\db\ActiveRecord
         return $this->hasMany(Cities::className(), ['id' => 'cities__id'])->viaTable('staff_cities', ['staff__id' => 'id']);
     }
 
+    public function getCurrcities()
+    {
+        return $this->hasMany(Cities::className(), ['id' => 'cities__id'])->viaTable('staff_cities', ['staff__id' => 'id']);
+    }
+
 
     public static function calculate_age($birthday) {
         $birthday_timestamp = strtotime($birthday);
@@ -115,6 +123,17 @@ class Staff extends \yii\db\ActiveRecord
             $age--;
         }
         return $age;
+    }
+
+    public static function validateCreatedAt($created_at)
+    {
+        $month = date('m',strtotime($created_at));
+        return ($month>=4 && $month<=9)?true:false;
+    }
+
+    public static function compareDates($created_at, $updated_at)
+    {
+        return (strtotime($created_at)==strtotime($updated_at))?true:false;
     }
 
 }

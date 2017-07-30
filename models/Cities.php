@@ -70,4 +70,10 @@ class Cities extends \yii\db\ActiveRecord
             ->where('date_add(date_of_birth, interval 30 year) < current_date and date_add(created_at, interval 1 month)< current_date');
     }
 
+    public function getCurrstaff()
+    {
+        return $this->hasMany(Staff::className(),['id'=>'staff__id'])->viaTable('staff_cities',['cities__id' => 'id'])
+            ->where(['status'=>0]);
+    }
+
 }
